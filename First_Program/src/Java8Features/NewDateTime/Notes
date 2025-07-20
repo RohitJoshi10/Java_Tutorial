@@ -1,0 +1,170 @@
+Sure, Rohit! Here's a **complete and easy-to-understand guide** to the **Java 8 Date & Time API**, introduced in `java.time` package.
+
+---
+
+## ✅ Why a New Date & Time API?
+
+Before Java 8, we had:
+
+* `java.util.Date`
+* `java.util.Calendar`
+* `java.text.SimpleDateFormat`
+
+These classes were:
+
+❌ **Mutable** (not thread-safe)
+❌ **Poorly designed**
+❌ **Confusing time zones & formatting**
+
+---
+
+## ✅ Java 8 Date & Time API — Overview
+
+Java 8 introduced a **modern, immutable, and thread-safe** date and time API in the `java.time` package based on the **ISO and Joda-Time** standards.
+
+---
+
+## 🔷 Main Classes in `java.time`
+
+| Class               | Description                                                             |
+| ------------------- | ----------------------------------------------------------------------- |
+| `LocalDate`         | Date (no time) — e.g. `2025-07-20`                                      |
+| `LocalTime`         | Time (no date) — e.g. `14:30:59`                                        |
+| `LocalDateTime`     | Date + Time — e.g. `2025-07-20T14:30:59`                                |
+| `ZonedDateTime`     | Date + Time + Timezone — e.g. `2025-07-20T14:30:59+05:30[Asia/Kolkata]` |
+| `Instant`           | Timestamp (machine time) — like Unix epoch                              |
+| `Duration`          | Difference between times                                                |
+| `Period`            | Difference between dates                                                |
+| `DateTimeFormatter` | For formatting and parsing dates/times                                  |
+
+---
+
+## 🔷 Examples
+
+### 1. **LocalDate**
+
+```java
+LocalDate today = LocalDate.now();
+LocalDate birthDate = LocalDate.of(1995, 5, 15);
+System.out.println(today); // 2025-07-20
+```
+
+### 2. **LocalTime**
+
+```java
+LocalTime now = LocalTime.now();
+LocalTime specific = LocalTime.of(14, 30);
+System.out.println(now); // 14:30:45.123
+```
+
+### 3. **LocalDateTime**
+
+```java
+LocalDateTime dateTime = LocalDateTime.now();
+System.out.println(dateTime); // 2025-07-20T14:30:45
+```
+
+### 4. **ZonedDateTime**
+
+```java
+ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
+System.out.println(zdt); // 2025-07-20T14:30:45+05:30[Asia/Kolkata]
+```
+
+### 5. **Instant**
+
+```java
+Instant timestamp = Instant.now();
+System.out.println(timestamp); // 2025-07-20T09:00:45.123Z
+```
+
+---
+
+## 🔷 Date Comparison
+
+```java
+LocalDate today = LocalDate.now();
+LocalDate tomorrow = today.plusDays(1);
+
+System.out.println(today.isBefore(tomorrow)); // true
+System.out.println(today.isAfter(tomorrow));  // false
+```
+
+---
+
+## 🔷 Period (Date Difference)
+
+```java
+LocalDate dob = LocalDate.of(2000, 1, 1);
+LocalDate now = LocalDate.now();
+Period age = Period.between(dob, now);
+System.out.println(age.getYears()); // Your age
+```
+
+---
+
+## 🔷 Duration (Time Difference)
+
+```java
+LocalTime start = LocalTime.of(10, 0);
+LocalTime end = LocalTime.of(12, 30);
+Duration duration = Duration.between(start, end);
+System.out.println(duration.toMinutes()); // 150
+```
+
+---
+
+## 🔷 Formatting & Parsing
+
+### Formatting
+
+```java
+LocalDate date = LocalDate.now();
+String formatted = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+System.out.println(formatted); // 20-07-2025
+```
+
+### Parsing
+
+```java
+String input = "20-07-2025";
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+LocalDate parsed = LocalDate.parse(input, formatter);
+System.out.println(parsed); // 2025-07-20
+```
+
+---
+
+## 🔷 Convert Between Old and New API
+
+```java
+// From Date to LocalDateTime
+Date date = new Date();
+Instant instant = date.toInstant();
+LocalDateTime ldt = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+// From LocalDateTime to Date
+LocalDateTime ldt2 = LocalDateTime.now();
+Instant instant2 = ldt2.atZone(ZoneId.systemDefault()).toInstant();
+Date date2 = Date.from(instant2);
+```
+
+---
+
+## ✅ Summary
+
+| Feature           | Old API (`java.util`) | New API (`java.time`)    |
+| ----------------- | --------------------- | ------------------------ |
+| Thread-safe       | ❌ No                  | ✅ Yes                    |
+| Immutable         | ❌ No                  | ✅ Yes                    |
+| Clear Design      | ❌ Confusing           | ✅ Clean & Structured     |
+| Timezone Handling | ❌ Hard                | ✅ Built-in with `ZoneId` |
+
+---
+
+## ✅ Interview Tip:
+
+**Q: Why is the new Date and Time API better?**
+**A:** It is **immutable**, **thread-safe**, and provides a much clearer and **standardized approach** to handling date, time, formatting, and time zones.
+
+---

@@ -1,0 +1,119 @@
+In **Java 8**, the `Function` interface is a part of the `java.util.function` package. It represents a **function that takes one input and returns one output**.
+
+---
+
+## 🔷 What is `Function<T, R>`?
+
+```java
+@FunctionalInterface
+public interface Function<T, R> {
+    R apply(T t);
+}
+```
+
+* `T`: Input type
+* `R`: Return type
+* The core method is `apply()` which takes input and produces a result.
+
+---
+
+## ✅ Example of a Basic Function
+
+```java
+import java.util.function.Function;
+
+public class FunctionExample {
+    public static void main(String[] args) {
+        Function<String, Integer> stringLength = str -> str.length();
+
+        System.out.println(stringLength.apply("Hello"));  // Output: 5
+    }
+}
+```
+
+---
+
+## 🔹 `apply()` Method
+
+* Takes one argument and returns a result.
+
+```java
+Function<Integer, Integer> square = x -> x * x;
+System.out.println(square.apply(5));  // Output: 25
+```
+
+---
+
+## 🔹 `andThen()` Method
+
+* First applies the current function, then applies another function to the result.
+* **f.andThen(g)** means: `g(f(x))`
+
+```java
+Function<Integer, Integer> multiplyBy2 = x -> x * 2;
+Function<Integer, Integer> add3 = x -> x + 3;
+
+Function<Integer, Integer> result = multiplyBy2.andThen(add3);
+System.out.println(result.apply(5));  // Output: 13 → (5 * 2) + 3
+```
+
+---
+
+## 🔹 `compose()` Method
+
+* First applies the passed function, then applies the current function.
+* **f.compose(g)** means: `f(g(x))`
+
+```java
+Function<Integer, Integer> multiplyBy2 = x -> x * 2;
+Function<Integer, Integer> add3 = x -> x + 3;
+
+Function<Integer, Integer> result = multiplyBy2.compose(add3);
+System.out.println(result.apply(5));  // Output: 16 → (5 + 3) * 2
+```
+
+> ✅ **Difference:**
+>
+> * `andThen`: current → then next
+> * `compose`: first passed → then current
+
+---
+
+## 🔹 `identity()` Method
+
+* Returns a function that returns its input argument.
+* Signature:
+
+  ```java
+  static <T> Function<T, T> identity()
+  ```
+
+```java
+Function<String, String> identityFunction = Function.identity();
+System.out.println(identityFunction.apply("Java"));  // Output: Java
+```
+
+---
+
+## 📌 Summary Table
+
+| Method       | Description                                      | Example                        |
+| ------------ | ------------------------------------------------ | ------------------------------ |
+| `apply()`    | Applies the function logic                       | `f.apply(x)`                   |
+| `andThen()`  | Applies current, then the next function          | `f.andThen(g).apply(x)`        |
+| `compose()`  | Applies next, then the current function          | `f.compose(g).apply(x)`        |
+| `identity()` | Returns a function that returns the input itself | `Function.identity().apply(x)` |
+
+---
+
+## ✅ Real-World Use Case Example
+
+```java
+Function<String, String> trim = String::trim;
+Function<String, String> toUpper = String::toUpperCase;
+
+Function<String, String> cleanAndUpper = trim.andThen(toUpper);
+
+System.out.println(cleanAndUpper.apply("   hello java  "));  // Output: HELLO JAVA
+```
+

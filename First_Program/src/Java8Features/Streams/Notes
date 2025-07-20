@@ -1,0 +1,146 @@
+### ✅ Streams in Java 8 — A Complete Overview
+
+Java 8 introduced the **Stream API** to process collections of objects in a **functional-style**. It allows you to **manipulate data** in a **declarative way**, similar to SQL statements or functional programming constructs.
+
+---
+
+## 🔷 What is a Stream in Java?
+
+A **Stream** is a **sequence of elements** that supports **sequential and parallel aggregate operations**. It's **not a data structure**, but it **conveys elements from a source** (like collections, arrays, or I/O resources) through a pipeline of computational operations.
+
+---
+
+## 🔷 Key Features of Streams
+
+* Declarative (like SQL)
+* Supports functional programming
+* Can be sequential or parallel
+* Lazy evaluation
+* Immutable data processing
+* Does not modify the original source
+
+---
+
+## 🔷 Stream API Terminologies
+
+1. **Source** – Where the stream comes from (e.g., `List`, `Set`, `Map`, `Array`)
+2. **Intermediate Operations** – Transform the stream (e.g., `map()`, `filter()`, `sorted()`)
+3. **Terminal Operations** – Produce a result or side-effect (e.g., `collect()`, `forEach()`, `reduce()`)
+
+---
+
+## 🔷 Stream Workflow
+
+```java
+List<String> names = Arrays.asList("John", "Jane", "Jack", "Doe");
+
+List<String> result = names.stream()       // Stream Source
+    .filter(name -> name.startsWith("J"))  // Intermediate Operation
+    .map(String::toUpperCase)              // Intermediate Operation
+    .sorted()                              // Intermediate Operation
+    .collect(Collectors.toList());         // Terminal Operation
+```
+
+---
+
+## 🔷 Types of Stream Operations
+
+### ✅ Intermediate Operations (Return another stream)
+
+| Operation                         | Description                |
+| --------------------------------- | -------------------------- |
+| `filter(Predicate)`               | Filters elements           |
+| `map(Function)`                   | Transforms each element    |
+| `flatMap(Function)`               | Flattens nested structures |
+| `sorted()` / `sorted(Comparator)` | Sorts stream               |
+| `distinct()`                      | Removes duplicates         |
+| `limit(n)`                        | Limits to `n` elements     |
+| `skip(n)`                         | Skips `n` elements         |
+
+---
+
+### ✅ Terminal Operations (End the stream pipeline)
+
+| Operation                                   | Description                        |
+| ------------------------------------------- | ---------------------------------- |
+| `forEach(Consumer)`                         | Performs action for each           |
+| `collect()`                                 | Converts stream to list, set, etc. |
+| `reduce()`                                  | Reduces to a single value          |
+| `count()`                                   | Returns total elements             |
+| `anyMatch()` / `allMatch()` / `noneMatch()` | Check match conditions             |
+| `findFirst()` / `findAny()`                 | Returns optional element           |
+
+---
+
+## 🔷 Examples
+
+### 1. **Filtering and Collecting**
+
+```java
+List<String> names = Arrays.asList("Tom", "Jerry", "Tim");
+List<String> filtered = names.stream()
+    .filter(n -> n.startsWith("T"))
+    .collect(Collectors.toList());
+System.out.println(filtered); // Output: [Tom, Tim]
+```
+
+### 2. **Mapping and Reducing**
+
+```java
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+int sum = numbers.stream()
+    .map(n -> n * n)
+    .reduce(0, Integer::sum);
+System.out.println(sum); // Output: 30 (1+4+9+16)
+```
+
+### 3. **Distinct and Sorted**
+
+```java
+List<Integer> nums = Arrays.asList(3, 1, 4, 1, 2, 2);
+List<Integer> uniqueSorted = nums.stream()
+    .distinct()
+    .sorted()
+    .collect(Collectors.toList());
+System.out.println(uniqueSorted); // Output: [1, 2, 3, 4]
+```
+
+---
+
+## 🔷 Parallel Streams
+
+```java
+List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8);
+list.parallelStream().forEach(System.out::println);
+```
+
+> Parallel streams use **multiple threads** internally to boost performance for large data processing, but should be used carefully due to thread-safety issues.
+
+---
+
+## 🔷 Stream vs Collection
+
+| Feature        | Stream                       | Collection             |
+| -------------- | ---------------------------- | ---------------------- |
+| Data storage   | Doesn’t store data           | Stores data            |
+| Evaluation     | Lazy                         | Eager                  |
+| Iteration      | Internal (managed by stream) | External (using loops) |
+| Can be reused? | No                           | Yes                    |
+
+---
+
+## 🔷 Common Collectors
+
+* `Collectors.toList()`
+* `Collectors.toSet()`
+* `Collectors.joining(", ")`
+* `Collectors.groupingBy()`
+* `Collectors.partitioningBy()`
+
+---
+
+## 🔷 Conclusion
+
+The **Stream API** in Java 8 provides a **powerful, efficient, and readable** way to process data. By leveraging functional programming concepts, you can write cleaner and more concise code, especially for collections and bulk operations.
+
+---

@@ -1,0 +1,112 @@
+In Java 8, **BiPredicate**, **BiFunction**, and **BiConsumer** are part of the `java.util.function` package, and are **functional interfaces** that accept **two input arguments**. Let's explore each one in detail with syntax, purpose, and examples.
+
+---
+
+### ✅ 1. **BiPredicate\<T, U>**
+
+* Represents a **boolean-valued function** of **two arguments**.
+* Used when you want to test two inputs and return a boolean result (true/false).
+
+#### 📌 Syntax:
+
+```java
+@FunctionalInterface
+public interface BiPredicate<T, U> {
+    boolean test(T t, U u);
+}
+```
+
+#### ✅ Example:
+
+```java
+import java.util.function.BiPredicate;
+
+public class BiPredicateExample {
+    public static void main(String[] args) {
+        BiPredicate<String, Integer> checkLength = (str, len) -> str.length() == len;
+
+        System.out.println(checkLength.test("Hello", 5)); // true
+        System.out.println(checkLength.test("Java", 3));  // false
+    }
+}
+```
+
+---
+
+### ✅ 2. **BiFunction\<T, U, R>**
+
+* Represents a function that accepts **two arguments** and produces a **result**.
+* Used when you want to take two inputs and return a value.
+
+#### 📌 Syntax:
+
+```java
+@FunctionalInterface
+public interface BiFunction<T, U, R> {
+    R apply(T t, U u);
+}
+```
+
+#### ✅ Example:
+
+```java
+import java.util.function.BiFunction;
+
+public class BiFunctionExample {
+    public static void main(String[] args) {
+        BiFunction<Integer, Integer, Integer> multiply = (a, b) -> a * b;
+
+        System.out.println(multiply.apply(5, 3)); // 15
+    }
+}
+```
+
+You can also return more complex types:
+
+```java
+BiFunction<String, String, String> concat = (s1, s2) -> s1 + " " + s2;
+System.out.println(concat.apply("Hello", "World")); // Hello World
+```
+
+---
+
+### ✅ 3. **BiConsumer\<T, U>**
+
+* Represents an operation that takes **two input arguments** and **returns nothing** (void).
+* Mostly used for performing side-effects (e.g., logging, modifying a data structure).
+
+#### 📌 Syntax:
+
+```java
+@FunctionalInterface
+public interface BiConsumer<T, U> {
+    void accept(T t, U u);
+}
+```
+
+#### ✅ Example:
+
+```java
+import java.util.function.BiConsumer;
+
+public class BiConsumerExample {
+    public static void main(String[] args) {
+        BiConsumer<String, Integer> print = (name, age) ->
+                System.out.println(name + " is " + age + " years old");
+
+        print.accept("Rohit", 25);
+    }
+}
+```
+
+---
+
+### 🔁 Summary Table:
+
+| Interface   | Method         | Input Types | Return Type | Use Case                     |
+| ----------- | -------------- | ----------- | ----------- | ---------------------------- |
+| BiPredicate | `test(T, U)`   | T, U        | boolean     | Test condition with 2 inputs |
+| BiFunction  | `apply(T, U)`  | T, U        | R           | Compute and return result    |
+| BiConsumer  | `accept(T, U)` | T, U        | void        | Perform action, no return    |
+
+---

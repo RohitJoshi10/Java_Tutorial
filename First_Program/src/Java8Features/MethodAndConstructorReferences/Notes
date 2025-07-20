@@ -1,0 +1,153 @@
+In **Java 8**, **Method References** and **Constructor References** are shorthand notations of **lambda expressions** that refer to **methods or constructors by name**. They make the code **more readable and concise**.
+
+---
+
+## 🔹 1. Method References
+
+A **method reference** is used to refer to an existing method **without executing it**. It is a compact way to write lambda expressions that just **call a method**.
+
+### ✅ Syntax:
+
+```
+ClassName::methodName
+```
+
+---
+
+### 📌 Types of Method References:
+
+| Type                                                   | Syntax                      | Description                                               |
+| ------------------------------------------------------ | --------------------------- | --------------------------------------------------------- |
+| Reference to a static method                           | `ClassName::staticMethod`   | Calls a static method                                     |
+| Reference to an instance method                        | `object::instanceMethod`    | Calls an instance method of a specific object             |
+| Reference to an instance method of an arbitrary object | `ClassName::instanceMethod` | Calls an instance method on an object passed as parameter |
+| Reference to a constructor                             | `ClassName::new`            | Creates a new instance of the class                       |
+
+---
+
+### 🔸 A. Reference to a Static Method
+
+```java
+import java.util.function.Consumer;
+
+public class StaticMethodRef {
+    public static void printMessage(String msg) {
+        System.out.println(msg);
+    }
+
+    public static void main(String[] args) {
+        Consumer<String> consumer = StaticMethodRef::printMessage;
+        consumer.accept("Hello from static method reference");
+    }
+}
+```
+
+---
+
+### 🔸 B. Reference to an Instance Method (using a specific object)
+
+```java
+import java.util.function.Consumer;
+
+public class InstanceMethodRef {
+    public void print(String name) {
+        System.out.println("Name: " + name);
+    }
+
+    public static void main(String[] args) {
+        InstanceMethodRef obj = new InstanceMethodRef();
+        Consumer<String> consumer = obj::print;
+        consumer.accept("Rohit");
+    }
+}
+```
+
+---
+
+### 🔸 C. Reference to an Instance Method of an Arbitrary Object
+
+```java
+import java.util.Arrays;
+import java.util.List;
+
+public class ArbitraryObjectRef {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Ravi", "Amit", "John");
+
+        // Instead of: names.forEach(name -> System.out.println(name));
+        names.forEach(System.out::println);
+    }
+}
+```
+
+---
+
+## 🔹 2. Constructor References
+
+Constructor reference is used to create new objects. It refers to a class constructor using `ClassName::new`.
+
+### ✅ Syntax:
+
+```
+ClassName::new
+```
+
+---
+
+### 🔸 Example 1: No-arg constructor
+
+```java
+import java.util.function.Supplier;
+
+class Employee {
+    public Employee() {
+        System.out.println("Employee Created!");
+    }
+}
+
+public class ConstructorRef {
+    public static void main(String[] args) {
+        Supplier<Employee> supplier = Employee::new;
+        Employee emp = supplier.get();  // Creates new Employee object
+    }
+}
+```
+
+---
+
+### 🔸 Example 2: Parameterized Constructor
+
+```java
+import java.util.function.BiFunction;
+
+class Student {
+    String name;
+    int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class ConstructorRefWithParams {
+    public static void main(String[] args) {
+        BiFunction<String, Integer, Student> studentCreator = Student::new;
+        Student s = studentCreator.apply("Rohit", 22);
+        System.out.println(s.name + " - " + s.age);
+    }
+}
+```
+
+---
+
+## 🔁 Summary
+
+| Reference Type                              | Syntax Example              | Use Case                             |
+| ------------------------------------------- | --------------------------- | ------------------------------------ |
+| Static method reference                     | `ClassName::staticMethod`   | Refer to static methods              |
+| Instance method of a particular object      | `object::instanceMethod`    | Refer to methods of specific object  |
+| Instance method of an arbitrary object type | `ClassName::instanceMethod` | Used in streams/collections          |
+| Constructor reference                       | `ClassName::new`            | Create new objects using constructor |
+
+---

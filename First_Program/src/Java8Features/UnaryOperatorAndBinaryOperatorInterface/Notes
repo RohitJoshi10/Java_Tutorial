@@ -1,0 +1,80 @@
+In Java 8, **`UnaryOperator`** and **`BinaryOperator`** are two specialized functional interfaces provided in the `java.util.function` package. They are **extensions of `Function` interface** used for specific operations.
+
+---
+
+### ✅ 1. `UnaryOperator<T>`
+
+* It represents an **operation on a single operand** that produces a result of the **same type** as its input.
+* It is a special case of `Function<T, R>` where **input and output are of the same type**.
+
+#### 📌 Syntax:
+
+```java
+@FunctionalInterface
+public interface UnaryOperator<T> extends Function<T, T> {
+    T apply(T t);
+}
+```
+
+#### ✅ Example:
+
+```java
+import java.util.function.UnaryOperator;
+
+public class UnaryOperatorExample {
+    public static void main(String[] args) {
+        UnaryOperator<String> toUpperCase = str -> str.toUpperCase();
+
+        System.out.println(toUpperCase.apply("rohit"));  // Output: ROHIT
+    }
+}
+```
+
+#### 🔁 Real-life Use Case:
+
+* Useful in transformations like string formatting, mathematical calculations on numbers, or applying discount to a price.
+
+---
+
+### ✅ 2. `BinaryOperator<T>`
+
+* It represents an **operation upon two operands** of the **same type**, producing a result of the **same type** as well.
+* It is a special case of `BiFunction<T, T, T>`.
+
+#### 📌 Syntax:
+
+```java
+@FunctionalInterface
+public interface BinaryOperator<T> extends BiFunction<T, T, T> {
+    T apply(T t1, T t2);
+}
+```
+
+#### ✅ Example:
+
+```java
+import java.util.function.BinaryOperator;
+
+public class BinaryOperatorExample {
+    public static void main(String[] args) {
+        BinaryOperator<Integer> sum = (a, b) -> a + b;
+
+        System.out.println(sum.apply(10, 20));  // Output: 30
+    }
+}
+```
+
+#### 🔁 Real-life Use Case:
+
+* Performing mathematical operations, merging values, finding max/min between two items, etc.
+
+---
+
+### 🔁 Summary Table
+
+| Interface           | Method       | Input(s) | Output | Use Case                           |
+| ------------------- | ------------ | -------- | ------ | ---------------------------------- |
+| `UnaryOperator<T>`  | `apply(T)`   | T        | T      | Apply a function on a single value |
+| `BinaryOperator<T>` | `apply(T,T)` | T, T     | T      | Combine two values of same type    |
+
+---

@@ -1,0 +1,114 @@
+### 🔷 What is `Supplier` Interface in Java?
+
+In **Java 8**, the `Supplier` interface is part of the `java.util.function` package. It represents a **function that supplies a value with no input** — meaning it **doesn’t take any arguments but returns a result**.
+
+---
+
+### 📌 Functional Interface Definition
+
+```java
+@FunctionalInterface
+public interface Supplier<T> {
+    T get();
+}
+```
+
+* `T`: The type of value to be supplied.
+* `get()` method: Used to supply or generate values when needed.
+
+---
+
+## ✅ Example: Basic Usage
+
+```java
+import java.util.function.Supplier;
+
+public class SupplierExample {
+    public static void main(String[] args) {
+        Supplier<String> greet = () -> "Hello, Rohit!";
+        System.out.println(greet.get());  // Output: Hello, Rohit!
+    }
+}
+```
+
+---
+
+## 🔹 Use Case: Supplying Random Numbers
+
+```java
+import java.util.function.Supplier;
+import java.util.Random;
+
+public class RandomSupplier {
+    public static void main(String[] args) {
+        Supplier<Integer> randomSupplier = () -> new Random().nextInt(100); // 0-99
+
+        System.out.println("Random number: " + randomSupplier.get());
+        System.out.println("Another random number: " + randomSupplier.get());
+    }
+}
+```
+
+---
+
+## 🔹 Use Case: Default or Lazy Values
+
+```java
+import java.util.function.Supplier;
+
+public class LazyValueExample {
+    public static void main(String[] args) {
+        String value = null;
+
+        Supplier<String> defaultSupplier = () -> "Default Value";
+
+        String result = (value != null) ? value : defaultSupplier.get();
+
+        System.out.println(result);  // Output: Default Value
+    }
+}
+```
+
+---
+
+## 🔹 Use Case: Object Creation
+
+```java
+import java.util.function.Supplier;
+
+class Student {
+    String name = "Rohit";
+}
+
+public class ObjectSupplier {
+    public static void main(String[] args) {
+        Supplier<Student> studentSupplier = Student::new;
+
+        Student s = studentSupplier.get();
+        System.out.println(s.name);  // Output: Rohit
+    }
+}
+```
+
+---
+
+## ✅ Summary
+
+| Feature      | Description                              |
+| ------------ | ---------------------------------------- |
+| `get()`      | Supplies a value with no input           |
+| Use cases    | Random values, defaults, object creation |
+| Common usage | Lazy loading, factory method pattern     |
+
+---
+
+### 🔁 Differences with Other Functional Interfaces
+
+| Interface   | Input | Output | Used For                       |
+| ----------- | ----- | ------ | ------------------------------ |
+| `Function`  | Yes   | Yes    | Transforming data              |
+| `Consumer`  | Yes   | No     | Performing actions             |
+| `Supplier`  | No    | Yes    | Providing/generating values    |
+| `Predicate` | Yes   | Yes    | Returning true/false (boolean) |
+
+---

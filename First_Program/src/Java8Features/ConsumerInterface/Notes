@@ -1,0 +1,115 @@
+### 🔷 What is `Consumer` Interface in Java?
+
+In **Java 8**, the `Consumer` interface is part of the `java.util.function` package. It is a **functional interface** that represents an operation that **accepts a single input argument and returns no result**.
+
+---
+
+### 📌 Functional Interface Definition:
+
+```java
+@FunctionalInterface
+public interface Consumer<T> {
+    void accept(T t);
+}
+```
+
+* `T`: the type of the input argument.
+* It’s typically used to **perform side effects** like printing, logging, storing, etc.
+
+---
+
+## ✅ Example: Basic Usage
+
+```java
+import java.util.function.Consumer;
+
+public class ConsumerExample {
+    public static void main(String[] args) {
+        Consumer<String> printUpperCase = str -> System.out.println(str.toUpperCase());
+
+        printUpperCase.accept("java");  // Output: JAVA
+    }
+}
+```
+
+---
+
+## 🔹 Common Use Case: Iterating a List
+
+```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> names = Arrays.asList("Rohit", "Amit", "Sneha");
+
+        Consumer<String> greet = name -> System.out.println("Hello " + name);
+
+        names.forEach(greet);
+    }
+}
+```
+
+---
+
+## 🔹 `andThen()` Method in Consumer
+
+The `andThen()` method chains two Consumers together. The second Consumer is executed **after** the first.
+
+```java
+Consumer<String> c1 = s -> System.out.println("First: " + s);
+Consumer<String> c2 = s -> System.out.println("Second: " + s);
+
+Consumer<String> combined = c1.andThen(c2);
+
+combined.accept("Java");
+// Output:
+// First: Java
+// Second: Java
+```
+
+---
+
+## 🔁 Use Case: With Custom Objects
+
+```java
+import java.util.function.Consumer;
+
+class Student {
+    String name;
+    int marks;
+
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+}
+
+public class CustomConsumer {
+    public static void main(String[] args) {
+        Student s1 = new Student("Rohit", 85);
+
+        Consumer<Student> printDetails = student -> {
+            System.out.println("Name: " + student.name);
+            System.out.println("Marks: " + student.marks);
+        };
+
+        printDetails.accept(s1);
+    }
+}
+```
+
+---
+
+## ✅ Summary
+
+| Feature     | Description                                   |
+| ----------- | --------------------------------------------- |
+| `accept(T)` | Consumes a value and performs an operation    |
+| `andThen()` | Chains multiple Consumers in sequence         |
+| Return type | Always `void` – used for side-effects         |
+| Use cases   | `forEach`, Logging, Printing, Updating values |
+
+---

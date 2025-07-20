@@ -1,0 +1,146 @@
+### ✅ `Optional` in Java 8
+
+In **Java 8**, the `Optional` class is introduced in `java.util` package to handle **null values gracefully** and avoid **NullPointerException (NPE)**.
+
+---
+
+## 🔷 Why `Optional`?
+
+Before Java 8, we used null checks like this:
+
+```java
+if (user != null && user.getAddress() != null) {
+    System.out.println(user.getAddress().getCity());
+}
+```
+
+This is ugly and error-prone. `Optional` helps write cleaner, **null-safe code**.
+
+---
+
+## 🔷 What is `Optional`?
+
+`Optional<T>` is a **container object** which may or may not contain a non-null value.
+
+---
+
+### ✅ Creating Optional Objects
+
+```java
+Optional<String> empty = Optional.empty();                     // empty Optional
+Optional<String> name = Optional.of("Rohit");                  // non-null value
+Optional<String> maybeName = Optional.ofNullable(null);        // may be null
+```
+
+---
+
+### ✅ Common Methods of `Optional`
+
+| Method                | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| `isPresent()`         | Returns true if value is present               |
+| `ifPresent(Consumer)` | Executes action if value is present            |
+| `get()`               | Returns the value (throws exception if null)   |
+| `orElse(T other)`     | Returns value or default if not present        |
+| `orElseGet(Supplier)` | Returns value or calls Supplier if not present |
+| `orElseThrow()`       | Throws exception if value is not present       |
+| `map(Function)`       | Applies transformation if value exists         |
+| `flatMap(Function)`   | Similar to map but avoids nested Optional      |
+| `filter(Predicate)`   | Returns Optional if value matches predicate    |
+
+---
+
+## 🔸 Examples
+
+### 1. **Using `isPresent()` and `get()`**
+
+```java
+Optional<String> name = Optional.of("Rohit");
+
+if (name.isPresent()) {
+    System.out.println(name.get()); // Output: Rohit
+}
+```
+
+---
+
+### 2. **Using `orElse()` and `orElseGet()`**
+
+```java
+Optional<String> name = Optional.ofNullable(null);
+
+System.out.println(name.orElse("Default"));             // Output: Default
+System.out.println(name.orElseGet(() -> "Fallback"));   // Output: Fallback
+```
+
+---
+
+### 3. **Using `ifPresent()`**
+
+```java
+Optional<String> name = Optional.of("Rohit");
+
+name.ifPresent(n -> System.out.println(n.toUpperCase())); // Output: ROHIT
+```
+
+---
+
+### 4. **Using `map()`**
+
+```java
+Optional<String> name = Optional.of("rohit");
+
+Optional<String> upper = name.map(String::toUpperCase);
+System.out.println(upper.get()); // Output: ROHIT
+```
+
+---
+
+### 5. **Using `filter()`**
+
+```java
+Optional<String> name = Optional.of("Rohit");
+
+Optional<String> result = name.filter(n -> n.startsWith("R"));
+System.out.println(result.isPresent()); // true
+```
+
+---
+
+### 6. **Avoiding NullPointerException with `Optional`**
+
+Without Optional:
+
+```java
+public String getCity(User user) {
+    if (user != null && user.getAddress() != null) {
+        return user.getAddress().getCity();
+    }
+    return "Unknown";
+}
+```
+
+With Optional:
+
+```java
+public String getCity(User user) {
+    return Optional.ofNullable(user)
+            .map(User::getAddress)
+            .map(Address::getCity)
+            .orElse("Unknown");
+}
+```
+
+---
+
+## 🔁 Summary
+
+| Use Case                | Method                       |
+| ----------------------- | ---------------------------- |
+| Check value present     | `isPresent()`, `ifPresent()` |
+| Return value or default | `orElse()`, `orElseGet()`    |
+| Throw exception if null | `orElseThrow()`              |
+| Transform value         | `map()`, `flatMap()`         |
+| Filter value            | `filter()`                   |
+
+---
