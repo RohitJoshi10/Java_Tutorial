@@ -1,6 +1,3 @@
-Thanks for sharing your GitHub link! Here's a complete `README.md` for your [Java\_Tutorial](https://github.com/RohitJoshi10/Java_Tutorial) repository, written in markdown and styled with some helpful emojis:
-
----
 
 ```markdown
 # ☕ Java Tutorial
