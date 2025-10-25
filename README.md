@@ -94,4 +94,3 @@ I hate Machine Learning 😅 — but I love Java, Defence, and Public Speaking!
 
 ```
 
-Let me know if you'd like me to add a custom badge (like for Java version or GitHub stats), a contributors section, or convert the folder structure into a clickable tree view. I'm happy to refine it even further! 🚀
